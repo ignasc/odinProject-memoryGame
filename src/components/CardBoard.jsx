@@ -1,16 +1,16 @@
-import Card from './Card.jsx'
+import Card from './Card.jsx';
 
-function CardBoard(){
+function CardBoard() {
   return (
-  <ul>
-    <li>
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+    <ul>
+      <li>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
       </li>
-   </ul>
-  )
+    </ul>
+  );
 }
 
 export default CardBoard;

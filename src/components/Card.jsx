@@ -1,9 +1,5 @@
-function Card(){
-  return(
-  <div>
-    card item
-    </div>
-  )
+function Card() {
+  return <div>card item</div>;
 }
 
-export default Card
+export default Card;
