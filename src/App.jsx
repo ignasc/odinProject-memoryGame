@@ -20,13 +20,11 @@ function App() {
     if (setValue === -1) {
       setCurrentScore(0);
     } else {
-      // console.log(`Adding ${setValue} point to ${currentScore}`);
       setCurrentScore((prev) => prev + 1);
     }
   }
   useEffect(() => {
     if (currentScore > bestScore) {
-      // console.log(`New best score!`);
       setBestScore(currentScore);
     }
   }, [currentScore]);
@@ -38,7 +36,7 @@ function App() {
   return (
     <>
       <ScoreBoard currentScore={currentScore} bestScore={bestScore} />
-      <CardBoard incrementScore={incrementScore} setBestScore={setBestScore} />
+      <CardBoard incrementScore={incrementScore} />
     </>
   );
 }

@@ -1,14 +1,6 @@
 import img_noImage from '../assets/no-image-icon-23494.png';
-import { useState } from 'react';
 
-function Card({
-  incrementScore,
-  imgSrc = null,
-  cardId,
-  cardUrl = null,
-  cardName = null,
-  handleCardClick,
-}) {
+function Card({ cardId, cardUrl = null, cardName = null, handleCardClick }) {
   function handleClick() {
     handleCardClick(cardId);
   }

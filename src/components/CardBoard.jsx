@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Card from './Card.jsx';
+import messages from './Messages.jsx';
 import { PokemonClient } from 'pokenode-ts';
 
 function shuffleArray(array) {
@@ -13,27 +14,29 @@ function shuffleArray(array) {
   return shuffeledArray;
 }
 
-function CardBoard({ incrementScore, setBestScore, resetScore }) {
+function CardBoard({ incrementScore }) {
   const [gameReady, setGameReady] = useState(false);
   const [gameMessage, setGameMessage] = useState(
     'Cards are loading, please wait'
   );
   const [arrayOfCards, setArrayOfCards] = useState([]);
   const cardsClicked = useRef([]);
-  const arrayOfPokemons = [];
   const numberOfCardsToDisplay = 10;
 
   function isCardClickedOnce(cardId) {
     if (cardsClicked.current.includes(cardId)) {
-      // console.log(`Card ${cardId} clicked more than once.`);
       cardsClicked.current = [];
       incrementScore(-1);
+      setGameMessage(`Oh dear, you messed up! Try again.`);
     } else {
-      // console.log(`Card ${cardId} clicked once`);
       const newArray = [...cardsClicked.current];
       newArray.push(cardId);
       cardsClicked.current = [...newArray];
       incrementScore(1);
+      setGameMessage(() => {
+        const randomIndex = Math.floor(Math.random() * (messages.length - 1));
+        return messages[randomIndex];
+      });
       setArrayOfCards((prev) => {
         return shuffleArray(prev);
       });
@@ -42,7 +45,6 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
 
   function handleCardClick(cardId) {
     isCardClickedOnce(cardId);
-    // console.log(`card was clicked with id ${cardId}`);
   }
 
   useEffect(() => {
@@ -51,7 +53,6 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
 
       const data = await api.listPokemons();
       const listOfDataObjects = [...shuffleArray(data.results)];
-      // console.log(listOfDataObjects)
       const newArrayOfCards = [];
       await Promise.all(
         listOfDataObjects.map(async (pokemon) => {
@@ -64,15 +65,10 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
           };
         })
       ).then((data) => {
-        // console.log('All promises resolved, data below:');
-        // console.log(data);
         for (let index = 0; index < data.length; index++) {
           const pokemonObject = data[index];
-          // console.log(`card url: ${pokemonObject.spriteUrl}`)
           newArrayOfCards.push(
             <Card
-              incrementScore={incrementScore}
-              resetScore={resetScore}
               cardId={pokemonObject.id}
               cardName={pokemonObject.name}
               cardUrl={pokemonObject.spriteUrl}
@@ -80,8 +76,8 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
             />
           );
         }
-        // console.log(newArrayOfCards);
         setArrayOfCards(newArrayOfCards);
+        setGameMessage('Click on a card only ONCE!');
         setGameReady(true);
       });
     })();
@@ -93,6 +89,7 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
 
   return gameReady ? (
     <main>
+      <h1>{gameMessage}</h1>
       <ul className="card-container">
         {arrayOfCards.slice(0, numberOfCardsToDisplay).map((element, index) => {
           return <li key={index}>{element}</li>;
@@ -100,7 +97,9 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
       </ul>
     </main>
   ) : (
-    <main>{gameMessage}</main>
+    <main>
+      <h1>{gameMessage}</h1>
+    </main>
   );
 }
 
