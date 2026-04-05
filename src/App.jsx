@@ -17,11 +17,11 @@ function App() {
   document.body.classList.add('light');
 
   function incrementScore(setValue) {
-    if (setValue === 0) {
+    if (setValue === -1) {
       setCurrentScore(0);
     } else {
-      console.log(`Adding one point to ${currentScore}`);
-      setCurrentScore(currentScore + 1);
+      console.log(`Adding ${setValue} point to ${currentScore}`);
+      setCurrentScore((prev) => prev + 1);
     }
   }
   useEffect(() => {

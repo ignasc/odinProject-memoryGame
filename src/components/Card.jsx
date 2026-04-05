@@ -4,26 +4,18 @@ import { useState } from 'react';
 function Card({
   incrementScore,
   imgSrc = null,
+  cardId,
   cardUrl = null,
   cardName = null,
+  handleCardClick,
 }) {
-  const [hasBeenClicked, setHasBeenClicked] = useState(false);
-
   function handleClick() {
-    if (!hasBeenClicked) {
-      incrementScore();
-      setHasBeenClicked(true);
-    } else {
-      incrementScore(0);
-      setHasBeenClicked(false);
-    }
+    handleCardClick(cardId);
   }
   return (
     <div className="card" onClick={handleClick}>
       <img src={cardUrl ? cardUrl : img_noImage} alt="" />
-      <p>
-        {cardName} {hasBeenClicked && `clicked`}
-      </p>
+      <p>{cardName}</p>
     </div>
   );
 }
