@@ -34,6 +34,9 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
       newArray.push(cardId);
       cardsClicked.current = [...newArray];
       incrementScore(1);
+      setArrayOfCards((prev) => {
+        return shuffleArray(prev);
+      });
     }
   }
 
@@ -47,9 +50,7 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
       const api = new PokemonClient();
 
       const data = await api.listPokemons();
-      const listOfDataObjects = [
-        ...shuffleArray(data.results).slice(0, numberOfCardsToDisplay),
-      ];
+      const listOfDataObjects = [...shuffleArray(data.results)];
       // console.log(listOfDataObjects)
       const newArrayOfCards = [];
       await Promise.all(
@@ -93,7 +94,7 @@ function CardBoard({ incrementScore, setBestScore, resetScore }) {
   return gameReady ? (
     <main>
       <ul className="card-container">
-        {arrayOfCards.map((element, index) => {
+        {arrayOfCards.slice(0, numberOfCardsToDisplay).map((element, index) => {
           return <li key={index}>{element}</li>;
         })}
       </ul>
