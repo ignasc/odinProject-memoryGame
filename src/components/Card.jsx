@@ -1,11 +1,15 @@
 import img_noImage from '../assets/no-image-icon-23494.png';
 import { useState } from 'react';
 
-function Card({ incrementScore, imgSrc = null }) {
+function Card({
+  incrementScore,
+  imgSrc = null,
+  cardUrl = null,
+  cardName = null,
+}) {
   const [hasBeenClicked, setHasBeenClicked] = useState(false);
 
   function handleClick() {
-    console.log(`Current state is ${hasBeenClicked}`);
     if (!hasBeenClicked) {
       incrementScore();
       setHasBeenClicked(true);
@@ -14,11 +18,12 @@ function Card({ incrementScore, imgSrc = null }) {
       setHasBeenClicked(false);
     }
   }
-
   return (
     <div className="card" onClick={handleClick}>
-      <img src={imgSrc ? imgSrc : img_noImage} alt="no image found" />
-      <p>Card component {hasBeenClicked && `clicked`}</p>
+      <img src={cardUrl ? cardUrl : img_noImage} alt="" />
+      <p>
+        {cardName} {hasBeenClicked && `clicked`}
+      </p>
     </div>
   );
 }

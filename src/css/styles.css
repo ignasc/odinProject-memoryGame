@@ -238,35 +238,32 @@ header {
 
 footer {
   border: 1px solid var(--border);
-  grid-column: 2 / -2;
+  display: flex;
+  justify-content: center;
 }
 
 main {
   background-color: var(--bg);
   box-shadow: var(--shadow-low);
-  /*    border: 1px solid var(--border);*/
   border-radius: var(--radius-small);
-  grid-column: 2 / -2;
   max-width: 64rem;
   padding: 25px;
 
-  display: grid;
-  grid-template-columns: var(--card-width);
-  grid-auto-rows: min-content;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-width), 1fr));
-
   gap: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
 
 footer {
   /*    border: 1px solid var(--border);*/
   border-radius: var(--radius-small);
   box-shadow: var(--shadow-low);
-  grid-column: 2 / -2;
-}
-
-.full-bleed {
-  grid-column: 1 / -1;
 }
 
 .card {
@@ -276,8 +273,8 @@ footer {
   /*    border: 1px solid var(--border-muted);*/
   /*padding: 0.5rem;*/
   flex-basis: var(--card-width);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 5px;
   overflow: hidden;
 
