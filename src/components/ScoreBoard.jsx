@@ -1,13 +1,16 @@
+import ButtonToggleTheme from './ButtonToggleTheme.jsx';
+
 function ScoreBoard({ currentScore, bestScore }) {
   // const currentScore = 0;
   // const bestScore = 99;
   return (
-    <footer>
+    <header>
+      <ButtonToggleTheme />
       <div>
         <p>Current score: {currentScore}</p>
         <p>Best score: {bestScore}</p>
       </div>
-    </footer>
+    </header>
   );
 }
 
