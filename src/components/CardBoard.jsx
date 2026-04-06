@@ -67,14 +67,11 @@ function CardBoard({ incrementScore }) {
       ).then((data) => {
         for (let index = 0; index < data.length; index++) {
           const pokemonObject = data[index];
-          newArrayOfCards.push(
-            <Card
-              cardId={pokemonObject.id}
-              cardName={pokemonObject.name}
-              cardUrl={pokemonObject.spriteUrl}
-              handleCardClick={handleCardClick}
-            />
-          );
+          newArrayOfCards.push({
+            id: pokemonObject.id,
+            name: pokemonObject.name,
+            url: pokemonObject.spriteUrl,
+          });
         }
         setArrayOfCards(newArrayOfCards);
         setGameMessage('Click on a card only ONCE!');
@@ -91,8 +88,17 @@ function CardBoard({ incrementScore }) {
     <main>
       <h1>{gameMessage}</h1>
       <ul className="card-container">
-        {arrayOfCards.slice(0, numberOfCardsToDisplay).map((element, index) => {
-          return <li key={index}>{element}</li>;
+        {arrayOfCards.slice(0, numberOfCardsToDisplay).map((element) => {
+          return (
+            <li key={element.id}>
+              <Card
+                cardId={element.id}
+                cardName={element.name}
+                cardUrl={element.url}
+                handleCardClick={handleCardClick}
+              />
+            </li>
+          );
         })}
       </ul>
     </main>

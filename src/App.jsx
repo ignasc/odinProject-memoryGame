@@ -2,41 +2,38 @@ import './css/resetcss.css';
 import './css/darkAndLightThemes.css';
 import './css/styles.css';
 
-import { useState, useEffect } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
-import heroImg from './assets/hero.png';
+import { useState } from 'react';
 import ScoreBoard from './components/ScoreBoard.jsx';
 import CardBoard from './components/CardBoard.jsx';
 import Footer from './components/Footer.jsx';
 
 function App() {
-  const [currentScore, setCurrentScore] = useState(0);
-  const [bestScore, setBestScore] = useState(0);
+  const [score, setScore] = useState({ current: 0, best: 0 });
 
-  const [themeClass, setThemeClass] = useState('light');
   document.body.classList.add('light');
 
   function incrementScore(setValue) {
     if (setValue === -1) {
-      setCurrentScore(0);
+      setScore((prev) => {
+        return {
+          ...prev,
+          current: 0,
+        };
+      });
     } else {
-      setCurrentScore((prev) => prev + 1);
+      setScore((prev) => {
+        const newCurrent = prev.current + 1;
+        return {
+          current: newCurrent,
+          best: newCurrent > prev.best ? newCurrent : prev.best,
+        };
+      });
     }
-  }
-  useEffect(() => {
-    if (currentScore > bestScore) {
-      setBestScore(currentScore);
-    }
-  }, [currentScore]);
-
-  function resetScore() {
-    setCurrentScore(0);
   }
 
   return (
     <>
-      <ScoreBoard currentScore={currentScore} bestScore={bestScore} />
+      <ScoreBoard currentScore={score.current} bestScore={score.best} />
       <CardBoard incrementScore={incrementScore} />
       <Footer />
     </>
