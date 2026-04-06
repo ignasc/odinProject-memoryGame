@@ -8,6 +8,7 @@ import viteLogo from './assets/vite.svg';
 import heroImg from './assets/hero.png';
 import ScoreBoard from './components/ScoreBoard.jsx';
 import CardBoard from './components/CardBoard.jsx';
+import Footer from './components/Footer.jsx';
 
 function App() {
   const [currentScore, setCurrentScore] = useState(0);
@@ -37,6 +38,7 @@ function App() {
     <>
       <ScoreBoard currentScore={currentScore} bestScore={bestScore} />
       <CardBoard incrementScore={incrementScore} />
+      <Footer />
     </>
   );
 }
