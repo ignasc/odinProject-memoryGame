@@ -13,7 +13,6 @@ export default function ButtonToggleTheme() {
   function handleClick(event) {
     event.preventDefault();
     setIsLight((prev) => {
-      console.log(`Current theme: ${document.body.className} is ${prev}`);
       if (prev) {
         document.body.className = 'dark';
       } else {
